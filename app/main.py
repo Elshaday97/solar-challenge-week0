@@ -73,3 +73,16 @@ sns.boxplot(
 plt.ylabel(selected_variable)
 plt.xlabel("Country")
 st.pyplot(plt)
+
+
+st.title("Top Regions Table")
+st.write(f"Average {selected_variable} by Country")
+
+top_regions = (
+    df_filtered.groupby("Country")[selected_variable]
+    .mean()
+    .sort_values(ascending=False)
+    .reset_index()
+)
+
+st.table(top_regions)
