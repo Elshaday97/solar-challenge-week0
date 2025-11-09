@@ -4,6 +4,15 @@ Follow the instructions to recreate the project including GitHub Actions workflo
 
 ---
 
+## Project Overview
+
+This repository contains data and notebooks for a small solar irradiance analysis across three countries (Benin, Sierra Leone, Togo). It includes cleaned datasets, exploratory notebooks, a small application entry point, and CI configuration.
+
+Key files:
+
+- Cleaned Data: `data/benin_clean.csv`, `data/sierraleone_clean.csv`, `data/togo_clean.csv`
+- Application Dashboard entry: `app/main.py`
+
 ## Project Setup
 
 ### 1. Clone the repository
@@ -40,3 +49,13 @@ This workflow:
 
 - Runs when changes are pushed to `main` branch
 - Sets up a python env't and checks the version
+
+## Usage
+
+- Open and run notebook files to view country level Data Profiling &
+
+- To view Streamlit Dashboard:
+  ```bash
+  streamlit run ./app/main.py
+  ```
+  - You will see a box plot for all the countries plotted against a selected variable
