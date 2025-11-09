@@ -6,25 +6,44 @@ import seaborn as sns
 st.set_page_config(page_title="Data Dashboard", layout="wide")
 
 
-def load_data():
+st.sidebar.header("Upload Your Data")
+col1, col2, col3 = st.sidebar.columns(3)
+
+with col1:
+    uploaded_file1 = st.file_uploader("Upload Benin CSV", type=["csv"], key="file1")
+
+with col2:
+    uploaded_file2 = st.file_uploader(
+        "Upload Sierra Leone CSV", type=["csv"], key="file2"
+    )
+
+with col3:
+    uploaded_file3 = st.file_uploader("Upload Togo CSV", type=["csv"], key="file3")
+
+df = None
+
+if (
+    uploaded_file1 is not None
+    and uploaded_file2 is not None
+    and uploaded_file3 is not None
+):
     try:
-        benin_df = pd.read_csv("data/benin_clean.csv")
-        sl_df = pd.read_csv("data/sierraleone_clean.csv")
-        togo_df = pd.read_csv("data/togo_clean.csv")
+        df1 = pd.read_csv(uploaded_file1)
+        df2 = pd.read_csv(uploaded_file2)
+        df3 = pd.read_csv(uploaded_file3)
 
-        benin_df["Country"] = "Benin"
-        sl_df["Country"] = "Sierra Leone"
-        togo_df["Country"] = "Togo"
+        df1["Country"] = "Benin"
+        df2["Country"] = "Sierra Leone"
+        df3["Country"] = "Togo"
+        df = pd.concat([df1, df2, df3], ignore_index=True)
 
-        combined_df = pd.concat([benin_df, sl_df, togo_df])
-        return combined_df
+        st.success("Files loaded successfully!")
     except Exception as e:
-        st.error(f"Error loading data: {e}")
+        st.error(f"Error loading files: {e}")
         st.stop()
-
-
-df = load_data()
-
+else:
+    st.info("Please upload all three CSV files to proceed.")
+    st.stop()
 
 st.sidebar.header("Filters")
 countries = df["Country"].unique()
